@@ -1,6 +1,6 @@
 import {ethers} from "hardhat";
 
-async function name() {
+async function main() {
     
 const votingContract = await ethers.getContractFactory("vote");
 const VotingContract = await votingContract.deploy("VoteToken", "VTN", 200);
