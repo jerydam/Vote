@@ -15,9 +15,6 @@ console.log(tokenSymbol);
 let tokenDecimal = await VotingContract.TokenDecimal();
 console.log(tokenDecimal);
 
-let tokenBalance = await VotingContract.BalanceOf[msg.sender];
-console.log(tokenBalance);
-
 let candidateOne = await VotingContract.firstCand();
 console.log(candidateOne);
 
