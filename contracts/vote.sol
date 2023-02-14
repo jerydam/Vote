@@ -2,7 +2,6 @@
 pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-
 contract Voting {
     uint public tokenPrice = 10 ether;
 address public owner;
@@ -13,12 +12,14 @@ string private symbol;
 uint256 private decimal;
 
 uint private totalSupply;
-uint voteCost;
+uint voteCost =100;
 address public firstCand;
 
 address public secondCand;
 
 address public thirdCand;
+
+address[] public allCand;
 // mapping of the address to the balance
 
 mapping (address => uint256) private balanceOf;
@@ -40,21 +41,16 @@ constructor(string memory _name, string memory _symbol){
     decimal = 1e18;
    }
    function buyTokens(uint256 _amount) public payable {
-        // Require that the sender has enough ether to buy the tokens
         require(msg.value >= _amount * 1 ether, "Not enough ether to buy tokens.");
-
-        // Transfer the ether to the contract
         totalSupply += _amount;
         balanceOf[msg.sender] += _amount;
 
-        // Emit a token purchase event
-        //emit TokenPurchase(msg.sender, _amount);
     }
 
 function addCandidate(address _firstCand, address _secondCand, address _thirdCand)public{
     if (_firstCand == _secondCand || _firstCand == _thirdCand || _secondCand == _thirdCand){
         revert("can't set same address");
-    }
+    } 
     firstCand = _firstCand;
     secondCand = _secondCand;
     thirdCand = _thirdCand;
@@ -80,33 +76,13 @@ function checkBalance(address _owner) public view returns (uint256) {
 
 function vote(address _position1, address _position2, address _position3) public{
     require(balanceOf[msg.sender]>= voteCost, "Not enough");
-    if(total[_position1]){
-        voteCost = 50;
-        balanceOf[msg.sender] - voteCost;
-        total[_position1] +=3;
-        totalSupply+= voteCost;
-    }
-     if else(total[_position2]){
-        voteCost = 30;
-        balanceOf[msg.sender] - voteCost;
-        total[_position1] +=2;
-        totalSupply+= voteCost;
-    }
-
-     if else(total[_position3]){
-        voteCost = 20;
-        balanceOf[msg.sender] - voteCost;
-        total[_position1] +=1;
-        totalSupply+= voteCost;
-    }
-    else(){
-        revert("insufficient fund")
-
-    }
-    
+    balanceOf[msg.sender] - voteCost;
+total[_position1] += 3;
+total[_position2] += 2;
+total[_position3] += 1;
+ 
 }
 function checkVote(address _check)public view returns(uint point){
  point= total[_check];
-
 }
 }
