@@ -1,28 +1,26 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-contract Voting {
+//import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+contract Voting  {
     uint public tokenPrice = 10 ether;
 address public owner;
-string private name;
+string public name;
 
-string private symbol;
+string public symbol;
 
-uint256 private decimal;
+uint256 public decimal;
 
-uint private totalSupply;
-uint voteCost =100;
+uint public totalSupply;
+uint private voteCost =100;
 address public firstCand;
 
 address public secondCand;
 
 address public thirdCand;
 
-address[] public allCand;
 // mapping of the address to the balance
 
-mapping (address => uint256) private balanceOf;
+mapping (address => uint256) public balanceOf;
 mapping(address => uint256) public total;
 // owner => spender =>  amount
 mapping (address =>mapping(address => uint)) public allowance;
@@ -62,7 +60,7 @@ function _totalSupply( uint _token) public returns(uint256){
     return totalSupply;
 }
 
-function buytoken(address to, uint amount) public {
+function buyToken(address to, uint amount) public {
     require(msg.sender == owner, "Access Denied");
     require(to != address(0), "transfer to address(0)");
     require(amount == 100, "you only have access to 100 token");
